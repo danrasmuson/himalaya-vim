@@ -1,5 +1,5 @@
 {
-  description = "Vim pugin for email management.";
+  description = "Vim plugin for email management.";
 
   inputs = {
     utils.url = "github:numtide/flake-utils";
@@ -14,24 +14,21 @@
       (system:
         let
           pkgs = import nixpkgs { inherit system; };
+          name = "himalaya";
         in
         rec {
           # nix build
           defaultPackage = pkgs.vimUtils.buildVimPluginFrom2Nix {
+            inherit name;
+            namePrefix = "";
             src = self;
-            name = "himalaya";
             version = pkgs.himalaya.version;
             buildInputs = [ pkgs.himalaya ];
-            dontConfigure = false;
-            postInstall = ''
-              mkdir -p $out/bin
-              ln -s ${pkgs.himalaya}/bin/himalaya $out/bin/himalaya
-            '';
           };
 
           # nix develop
           devShell = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; [
+            nativeBuildInputs = with pkgs; defaultPackage.buildInputs ++ [
               # Nix LSP + formatter
               rnix-lsp
               nixpkgs-fmt
@@ -44,8 +41,27 @@
               lua52Packages.lua-lsp
 
               # Editors
-              vim
-              neovim
+              ((vim_configurable.override { }).customize {
+                name = "vim";
+                vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
+                  start = [ ];
+                  opt = [ defaultPackage ];
+                };
+                vimrcConfig.customRC = ''
+                  packadd! ${name}
+                '';
+              })
+              (neovim.override {
+                configure = {
+                  packages.myPlugins = with pkgs.vimPlugins; {
+                    start = [ telescope-nvim ];
+                    opt = [ defaultPackage ];
+                  };
+                  customRC = ''
+                    packadd! ${name}
+                  '';
+                };
+              })
             ];
           };
         }
