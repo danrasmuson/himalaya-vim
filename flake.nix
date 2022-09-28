@@ -2,6 +2,7 @@
   description = "Vim plugin for email management.";
 
   inputs = {
+    himalaya-dev.url = "github:soywod/himalaya/develop";
     utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -9,11 +10,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, utils, ... }:
+  outputs = { self, nixpkgs, himalaya-dev, utils, ... }:
     utils.lib.eachDefaultSystem
       (system:
         let
           pkgs = import nixpkgs { inherit system; };
+          himalaya = (import himalaya-dev).defaultPackage.${system}; # Develop build
+          # himalaya = pkgs.himalaya; # Master build (last release)
           name = "himalaya";
         in
         rec {
@@ -22,13 +25,14 @@
             inherit name;
             namePrefix = "";
             src = self;
-            version = pkgs.himalaya.version;
-            buildInputs = [ pkgs.himalaya ];
+            version = himalaya.version;
+            buildInputs = [ himalaya ];
           };
 
           # nix develop
           devShell = pkgs.mkShell {
-            nativeBuildInputs = with pkgs; defaultPackage.buildInputs ++ [
+            buildInputs = defaultPackage.buildInputs;
+            nativeBuildInputs = with pkgs; [
               # Nix LSP + formatter
               rnix-lsp
               nixpkgs-fmt

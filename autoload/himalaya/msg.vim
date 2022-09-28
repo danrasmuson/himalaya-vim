@@ -1,7 +1,8 @@
 let s:log = function("himalaya#shared#log#info")
 let s:trim = function("himalaya#shared#utils#trim")
 let s:cli = function("himalaya#shared#cli#call")
-let s:plain_req = function("himalaya#request#plain")
+let s:send_plain = function("himalaya#request#plain")
+let s:send_json = function("himalaya#request#json")
 
 let s:msg_id = ""
 let s:draft = ""
@@ -9,8 +10,8 @@ let s:attachment_paths = []
 
 function! himalaya#msg#list_with(account, mbox, page, should_throw)
   let pos = getpos(".")
-  let msgs = s:plain_req({
-    \'cmd': '--account %s --mailbox %s list --max-width %d --page %d',
+  let msgs = s:send_plain({
+    \'cmd': '--account %s --folder %s list --max-width %d --page %d',
     \'args': [shellescape(a:account), shellescape(a:mbox), s:bufwidth(), a:page],
     \'msg': printf("Fetching %s messages", a:mbox),
     \'should_throw': a:should_throw,
@@ -50,12 +51,12 @@ function! himalaya#msg#read()
     if empty(s:msg_id) || s:msg_id == "HASH" | return | endif
     let account = himalaya#account#curr()
     let mbox = himalaya#mbox#curr_mbox()
-    let msg = s:cli(
-      \"--account %s --mailbox %s read %s",
-      \[shellescape(account), shellescape(mbox), s:msg_id],
-      \printf("Fetching message %s", s:msg_id),
-      \1,
-    \)
+    let msg = s:send_json({
+    \ 'cmd': '--account %s --folder %s read %s',
+    \ 'args': [shellescape(account), shellescape(mbox), s:msg_id],
+    \ 'msg': printf('Fetching message %s', s:msg_id),
+    \ 'should_throw': 1,
+    \})
     call s:close_open_buffers('Himalaya read message')
     execute printf("silent! botright new Himalaya read message [%s]", s:msg_id)
     setlocal modifiable

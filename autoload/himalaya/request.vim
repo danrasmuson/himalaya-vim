@@ -1,7 +1,7 @@
 function! himalaya#request#json(opts)
-  let msg = get(a:, 'opts.msg', '')
-  let cmd = get(a:, 'opts.cmd', '')
-  let args = get(a:, 'opts.args', [])
+  let msg = get(a:opts, 'msg', '')
+  let cmd = get(a:opts, 'cmd', '')
+  let args = get(a:opts, 'args', [])
   let should_throw = get(a:, 'opts.should_throw', v:false)
 
   call himalaya#shared#log#info(printf('%s…', msg))
@@ -17,7 +17,7 @@ function! himalaya#request#json(opts)
       let res = substitute(res, ':false', ':v:false', 'g')
       let res = eval(res)
       redraw | call himalaya#shared#log#info(printf('%s [OK]', msg))
-      return res.response
+      return res
     catch
       redraw
       for line in split(res, '\n')
