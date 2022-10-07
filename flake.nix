@@ -26,7 +26,7 @@
             namePrefix = "";
             src = self;
             version = himalaya.version;
-            buildInputs = [ himalaya ];
+            buildInputs = with pkgs; [ himalaya fzf ];
           };
 
           # nix develop
@@ -48,21 +48,27 @@
               ((vim_configurable.override { }).customize {
                 name = "vim";
                 vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-                  start = [ ];
+                  start = [ fzf-vim ];
                   opt = [ defaultPackage ];
                 };
                 vimrcConfig.customRC = ''
                   packadd! ${name}
+
+                  " native or fzf
+                  let g:himalaya_mailbox_picker = 'native'
                 '';
               })
               (neovim.override {
                 configure = {
                   packages.myPlugins = with pkgs.vimPlugins; {
-                    start = [ telescope-nvim ];
+                    start = [ telescope-nvim fzf-vim ];
                     opt = [ defaultPackage ];
                   };
                   customRC = ''
                     packadd! ${name}
+
+                    " native, fzf or telescope
+                    let g:himalaya_mailbox_picker = 'native'
                   '';
                 };
               })

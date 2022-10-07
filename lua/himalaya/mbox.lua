@@ -22,24 +22,29 @@ local function preview_command(entry, bufnr)
   end)
 end
 
-local function entry_maker(entry)
-  return {
-    value = entry,
-    display = entry,
-    ordinal = entry,
-    preview_command = preview_command,
-  }
-end
-
 M.mbox_picker = function(cb, mboxes)
-  local finder_opts = {results = mboxes}
   local previewer = nil
+  local finder_opts = {
+    results = mboxes,
+    entry_maker = function(entry) return {
+      value = entry.name,
+      display = entry.name,
+      ordinal = entry.name,
+    } end,
+  }
+  
   if vim.g.himalaya_telescope_preview_enabled then
-    finder_opts.entry_maker = entry_maker
     previewer = previewers.display_content.new({})
+    finder_opts.entry_maker = function(entry) return {
+      value = entry.name,
+      display = entry.name,
+      ordinal = entry.name,
+      preview_command = preview_command,
+    } end
   end
+  
   pickers.new {
-    results_title = 'Mailboxes',
+    results_title = 'Folders',
     finder = finders.new_table(finder_opts),
     sorter = sorters.get_generic_fuzzy_sorter(),
     attach_mappings = function(prompt_bufnr)

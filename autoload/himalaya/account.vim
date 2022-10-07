@@ -1,6 +1,4 @@
-" Account
-
-let s:curr_account = ""
+let s:curr_account = ''
 
 function! himalaya#account#curr()
   return s:curr_account
