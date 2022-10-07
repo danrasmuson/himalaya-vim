@@ -22,10 +22,10 @@ local function preview_command(entry, bufnr)
   end)
 end
 
-M.mbox_picker = function(cb, mboxes)
+M.select = function(cb, folders)
   local previewer = nil
   local finder_opts = {
-    results = mboxes,
+    results = folders,
     entry_maker = function(entry) return {
       value = entry.name,
       display = entry.name,

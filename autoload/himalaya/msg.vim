@@ -12,7 +12,7 @@ function! himalaya#msg#list_with(account, mbox, page, should_throw)
   \ 'msg': printf('Fetching %s messages', a:mbox),
   \ 'should_throw': a:should_throw,
   \})
-  let buftype = stridx(bufname('%'), 'Himalaya messages') == 0 ? 'file' : 'edit'
+  let buftype = stridx(bufname('%'), 'Himalaya emails') == 0 ? 'file' : 'edit'
   execute printf('silent! %s Himalaya messages [%s] [page %d]', buftype, a:mbox, a:page)
   setlocal modifiable
   silent execute '%d'
@@ -30,8 +30,8 @@ function! himalaya#msg#list(...)
       call himalaya#account#set(a:1)
     endif
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
-    let page = himalaya#mbox#curr_page()
+    let mbox = himalaya#folder#curr_folder()
+    let page = himalaya#folder#curr_page()
     call himalaya#msg#list_with(account, mbox, page, 1)
   catch
     if !empty(v:exception)
@@ -46,7 +46,7 @@ function! himalaya#msg#read()
     let s:msg_id = s:get_focused_msg_id()
     if empty(s:msg_id) || s:msg_id == 'ID' || s:msg_id == 'HASH' | return | endif
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg = himalaya#request#json({
     \ 'cmd': '--account %s --folder %s read %s',
     \ 'args': [shellescape(account), shellescape(mbox), s:msg_id],
@@ -74,7 +74,7 @@ function! himalaya#msg#write(...)
   try
     let pos = getpos('.')
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg = a:0 > 0 ? a:1 : himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s template new',
     \ 'args': [shellescape(account), shellescape(mbox)],
@@ -101,7 +101,7 @@ function! himalaya#msg#reply()
   try
     let pos = getpos('.')
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg_id = stridx(bufname('%'), 'Himalaya messages') == 0 ? s:get_focused_msg_id() : s:msg_id
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s template reply %s',
@@ -127,7 +127,7 @@ function! himalaya#msg#reply_all()
   try
     let pos = getpos('.')
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg_id = stridx(bufname('%'), 'Himalaya messages') == 0 ? s:get_focused_msg_id() : s:msg_id
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s template reply %s --all',
@@ -153,7 +153,7 @@ function! himalaya#msg#forward()
   try
     let pos = getpos('.')
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg_id = stridx(bufname('%'), 'Himalaya messages') == 0 ? s:get_focused_msg_id() : s:msg_id
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s template forward %s',
@@ -176,7 +176,7 @@ function! himalaya#msg#forward()
 endfunction
 
 function! himalaya#msg#copy()
-  call himalaya#mbox#pick('himalaya#msg#_copy')
+  call himalaya#folder#open_picker('himalaya#msg#_copy')
 endfunction
 
 function! himalaya#msg#_copy(target_mbox)
@@ -184,14 +184,14 @@ function! himalaya#msg#_copy(target_mbox)
     let pos = getpos('.')
     let msg_id = stridx(bufname('%'), 'Himalaya messages') == 0 ? s:get_focused_msg_id() : s:msg_id
     let account = himalaya#account#curr()
-    let source_mbox = himalaya#mbox#curr_mbox()
+    let source_mbox = himalaya#folder#curr_folder()
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s copy %s %s',
     \ 'args': [shellescape(account), shellescape(source_mbox), msg_id, shellescape(a:target_mbox)],
     \ 'msg': 'Copying email',
     \ 'should_throw': 1,
     \})
-    call himalaya#msg#list_with(account, source_mbox, himalaya#mbox#curr_page(), 1)
+    call himalaya#msg#list_with(account, source_mbox, himalaya#folder#curr_page(), 1)
     call setpos('.', pos)
   catch
     if !empty(v:exception)
@@ -201,7 +201,7 @@ function! himalaya#msg#_copy(target_mbox)
 endfunction
 
 function! himalaya#msg#move()
-  call himalaya#mbox#pick('himalaya#msg#_move')
+  call himalaya#folder#open_picker('himalaya#msg#_move')
 endfunction
 
 function! himalaya#msg#_move(target_mbox)
@@ -212,14 +212,14 @@ function! himalaya#msg#_move(target_mbox)
     if choice != 'y' | return | endif
     let pos = getpos('.')
     let account = himalaya#account#curr()
-    let source_mbox = himalaya#mbox#curr_mbox()
+    let source_mbox = himalaya#folder#curr_folder()
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s move %s %s',
     \ 'args': [shellescape(account), shellescape(source_mbox), msg_id, shellescape(a:target_mbox)],
     \ 'msg': 'Moving email',
     \ 'should_throw': 1,
     \})
-    call himalaya#msg#list_with(account, source_mbox, himalaya#mbox#curr_page(), 1)
+    call himalaya#msg#list_with(account, source_mbox, himalaya#folder#curr_page(), 1)
     call setpos('.', pos)
   catch
     if !empty(v:exception)
@@ -236,7 +236,7 @@ function! himalaya#msg#delete() range
     if choice != 'y' | return | endif
     let pos = getpos('.')
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s delete %s',
     \ 'args': [shellescape(account), shellescape(mbox), msg_ids],
@@ -244,7 +244,7 @@ function! himalaya#msg#delete() range
     \ 'should_throw': 1,
     \})
 
-    call himalaya#msg#list_with(account, mbox, himalaya#mbox#curr_page(), 1)
+    call himalaya#msg#list_with(account, mbox, himalaya#folder#curr_page(), 1)
     call setpos('.', pos)
   catch
     if !empty(v:exception)
@@ -298,7 +298,7 @@ endfunction
 function! himalaya#msg#attachments()
   try
     let account = himalaya#account#curr()
-    let mbox = himalaya#mbox#curr_mbox()
+    let mbox = himalaya#folder#curr_folder()
     let msg_id = stridx(bufname('%'), 'Himalaya messages') == 0 ? s:get_focused_msg_id() : s:msg_id
     let msg = himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s attachments %s',

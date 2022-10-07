@@ -25,7 +25,7 @@
             inherit name;
             namePrefix = "";
             src = self;
-            version = himalaya.version;
+            version = 1;
             buildInputs = with pkgs; [ himalaya fzf ];
           };
 
