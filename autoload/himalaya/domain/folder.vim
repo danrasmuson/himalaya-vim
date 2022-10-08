@@ -32,8 +32,8 @@ function! himalaya#domain#folder#open_picker(callback) abort
     \ 'should_throw': 0,
     \})
 
-    if exists('g:himalaya_mailbox_picker')
-      let picker = g:himalaya_mailbox_picker
+    if exists('g:himalaya_folder_picker')
+      let picker = g:himalaya_folder_picker
     else
       if &rtp =~ 'telescope'
         let picker = 'telescope'

@@ -55,7 +55,7 @@
                   packadd! ${name}
 
                   " native or fzf
-                  let g:himalaya_mailbox_picker = 'native'
+                  let g:himalaya_folder_picker = 'native'
                 '';
               })
               (neovim.override {
@@ -70,7 +70,7 @@
                     packadd! ${name}
 
                     " native, fzf or telescope
-                    let g:himalaya_mailbox_picker = 'native'
+                    let g:himalaya_folder_picker = 'native'
                   '';
                 };
               })

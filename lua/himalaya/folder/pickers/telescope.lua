@@ -33,7 +33,7 @@ M.select = function(cb, folders)
     } end,
   }
   
-  if vim.g.himalaya_telescope_preview_enabled then
+  if vim.g.himalaya_folder_picker_telescope_preview then
     previewer = previewers.display_content.new({})
     finder_opts.entry_maker = function(entry) return {
       value = entry.name,
