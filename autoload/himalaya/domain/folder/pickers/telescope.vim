@@ -3,6 +3,6 @@
 " Neovim.
 "
 " [telescope.nvim]: https://github.com/nvim-telescope/telescope.nvim
-function! himalaya#folder#pickers#telescope#select(callback, folders) abort
+function! himalaya#domain#folder#pickers#telescope#select(callback, folders) abort
   call luaeval('require("himalaya.folder.pickers.telescope").select')(a:callback, a:folders)
 endfunction

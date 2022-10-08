@@ -15,7 +15,7 @@ function! himalaya#domain#email#list_with(account, folder, page, should_throw) a
   execute printf('silent! %s Himalaya emails [%s] [page %d]', buftype, a:folder, a:page)
   setlocal modifiable
   silent execute '%d'
-  call append(0, split(emails, '\n'))
+  call append(0, split(emails, "\n"))
   silent execute '$d'
   setlocal filetype=himalaya-email-listing
   let &modified = 0
@@ -60,7 +60,7 @@ function! himalaya#domain#email#read() abort
     execute printf('silent! botright new Himalaya read email [%s]', s:id)
     setlocal modifiable
     silent execute '%d'
-    call append(0, split(substitute(email, '\r', '', 'g'), '\n'))
+    call append(0, split(substitute(email, "\r", '', 'g'), "\n"))
     silent execute '$d'
     setlocal filetype=himalaya-email-reading
     let &modified = 0
@@ -88,7 +88,7 @@ function! himalaya#domain#email#write(...) abort
     silent! botright new Himalaya write
     setlocal modifiable
     silent execute '%d'
-    call append(0, split(substitute(email, '\r', '', 'g'), '\n'))
+    call append(0, split(substitute(email, "\r", '', 'g'), "\n"))
     silent execute '$d'
     setlocal filetype=himalaya-email-writing
     let &modified = 0
@@ -115,7 +115,7 @@ function! himalaya#domain#email#reply() abort
     \ 'should_throw': 1,
     \})
     execute printf('silent! edit Himalaya reply [%s]', id)
-    call append(0, split(substitute(email, '\r', '', 'g'), '\n'))
+    call append(0, split(substitute(email, "\r", '', 'g'), "\n"))
     silent execute '$d'
     setlocal filetype=himalaya-email-writing
     let &modified = 0
@@ -142,7 +142,7 @@ function! himalaya#domain#email#reply_all() abort
     \ 'should_throw': 1,
     \})
     execute printf('silent! edit Himalaya reply all [%s]', id)
-    call append(0, split(substitute(email, '\r', '', 'g'), '\n'))
+    call append(0, split(substitute(email, "\r", '', 'g'), "\n"))
     silent execute '$d'
     setlocal filetype=himalaya-email-writing
     let &modified = 0
@@ -169,7 +169,7 @@ function! himalaya#domain#email#forward() abort
     \ 'should_throw': 1,
     \})
     execute printf('silent! edit Himalaya forward [%s]', id)
-    call append(0, split(substitute(email, '\r', '', 'g'), '\n'))
+    call append(0, split(substitute(email, "\r", '', 'g'), "\n"))
     silent execute '$d'
     setlocal filetype=himalaya-email-writing
     let &modified = 0
@@ -297,7 +297,7 @@ function! himalaya#domain#email#process_draft() abort
       elseif choice == 'q'
         return
       elseif choice == 'c'
-        call himalaya#domain#email#write(join(getline(1, '$'), '\n') . '\n')
+        call himalaya#domain#email#write(join(getline(1, '$'), "\n") . "\n")
         return
       endif
     endwhile
@@ -347,7 +347,7 @@ function! himalaya#domain#email#complete_contact(findstart, base) abort
       return start
     else
       let output = system(substitute(g:himalaya_complete_contact_cmd, '%s', a:base, ''))
-      let lines = split(output, '\n')
+      let lines = split(output, "\n")
 
       return map(lines, 's:line_to_complete_item(v:val)')
     endif
@@ -376,8 +376,6 @@ function! himalaya#domain#email#add_attachment() abort
   endtry
 endfunction
 
-" Utils
-
 " https://newbedev.com/get-usable-window-width-in-vim-script
 function! s:bufwidth() abort
   let width = winwidth(0)
@@ -389,7 +387,7 @@ function! s:bufwidth() abort
     let signwidth = 2
   elseif &signcolumn == 'auto'
     let signs = execute(printf('sign place buffer=%d', bufnr('')))
-    let signs = split(signs, '\n')
+    let signs = split(signs, "\n")
     let signwidth = len(signs)>2? 2: 0
   else
     let signwidth = 0

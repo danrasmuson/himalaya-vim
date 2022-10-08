@@ -10,8 +10,8 @@ local previewers = require('telescope.previewers')
 local function preview_command(entry, bufnr)
   vim.api.nvim_buf_call(bufnr, function()
     local page = 0 -- page 0 for preview
-    local account = vim.fn['himalaya#account#curr']()
-    local success, output = pcall(vim.fn['himalaya#email#list_with'], account, entry.value, page, true)
+    local account = vim.fn['himalaya#domain#account#current']()
+    local success, output = pcall(vim.fn['himalaya#domain#email#list_with'], account, entry.value, page, true)
     if not (success) then
       vim.cmd('redraw')
       vim.bo.modifiable = true

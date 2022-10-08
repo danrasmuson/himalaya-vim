@@ -3,7 +3,7 @@
 "
 " [fzf]: https://github.com/junegunn/fzf
 " [fzf.vim]: https://github.com/junegunn/fzf.vim
-function! himalaya#folder#pickers#fzf#select(callback, folders) abort
+function! himalaya#domain#folder#pickers#fzf#select(callback, folders) abort
   call fzf#run({
   \ 'source': map(a:folders, 'v:val.name'),
   \ 'sink': function(a:callback),

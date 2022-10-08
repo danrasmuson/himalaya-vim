@@ -31,7 +31,7 @@ filetype plugin on
 set hidden
 ```
 
-### Folder picker
+### `g:himalaya_folder_picker`
 
 Defines the provider used for selecting folders (default keybind:
 `gm`):
@@ -47,20 +47,16 @@ used (fzf > telescope > native).
 let g:himalaya_folder_picker = 'native' | 'fzf' | 'telescope'
 ```
 
-### Folder picker `telescope.nvim` preview
+### `g:himalaya_folder_picker_telescope_preview`
 
-Enables folder previewing when picking a folder with the
-`telescope.nvim` provider.
+Enables folder preview when picking a folder with the `telescope.nvim`
+provider.
 
 ```vim
 let g:himalaya_folder_picker_telescope_preview = 1
 ```
 
-### Contact completion
-
-```vim
-let g:himalaya_complete_contact_cmd = '<your completion command>'
-```
+### `g:himalaya_complete_contact_cmd`
 
 Defines the command to use for contact completion. When this is set,
 `completefunc` will be set when composing emails so that contacts can
@@ -71,19 +67,25 @@ must contain tab-separated fields; the first must be the email
 address, and the second, if present, must be the name. `%s` in the
 command will be replaced with the search query.
 
+```vim
+let g:himalaya_complete_contact_cmd = '<your completion command>'
+```
+
 ## Usage
 
 ### Folder listing
 
-Default behaviour (basic prompt):
+With the native picker (default):
 
 ![screenshot](https://user-images.githubusercontent.com/10437171/113631817-51eb3180-966a-11eb-8b13-cd1f1f2539ab.jpeg)
 
-With [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim) support:
+With the
+[telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+picker:
 
 ![screenshot](https://user-images.githubusercontent.com/10437171/113631294-86122280-9669-11eb-8074-1c43c36b65a9.jpeg)
 
-With [fzf.vim](https://github.com/junegunn/fzf.vim) support:
+With the [fzf.vim](https://github.com/junegunn/fzf.vim) picker:
 
 ![screenshot](https://user-images.githubusercontent.com/10437171/113631382-acd05900-9669-11eb-817d-c28fd5d9574c.jpeg)
 
