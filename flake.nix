@@ -65,6 +65,8 @@
                     opt = [ defaultPackage ];
                   };
                   customRC = ''
+                    syntax on
+                    filetype plugin on
                     packadd! ${name}
 
                     " native, fzf or telescope

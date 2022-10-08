@@ -1,4 +1,4 @@
-if exists("b:current_syntax")
+if exists('b:current_syntax')
   finish
 endif
 
@@ -10,7 +10,8 @@ syntax match HimalayaSubject   /^.\{-}│.\{-}│.\{-}│/            contains=H
 syntax match HimalayaSender    /^.\{-}│.\{-}│.\{-}│.\{-}│/      contains=HimalayaId,HimalayaFlags,HimalayaSubject,HimalayaSeparator
 syntax match HimalayaDate      /^.\{-}│.\{-}│.\{-}│.\{-}│.\{-}/ contains=HimalayaId,HimalayaFlags,HimalayaSubject,HimalayaSender,HimalayaSeparator
 
-" FIXME: Find a way to set the line bold AND to keep the style of each columns.
+" FIXME: Find a way to set the line bold AND to keep the style of each
+" columns.
 " syntax match HimalayaUnseen /^.\{-}│✷.*$/ contains=HimalayaSeparator
 " highlight HimalayaUnseen term=bold cterm=bold gui=bold
 
@@ -23,4 +24,4 @@ highlight default link HimalayaSubject   String
 highlight default link HimalayaSender    Structure
 highlight default link HimalayaDate      Constant
 
-let b:current_syntax = "himalaya-msg-list"
+let b:current_syntax = 'himalaya-email-listing'
