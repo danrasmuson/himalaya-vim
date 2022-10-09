@@ -10,7 +10,7 @@ call himalaya#keybinds#define([
   \['n', 'gr', 'email#reply'                  ],
   \['n', 'gR', 'email#reply_all'              ],
   \['n', 'gf', 'email#forward'                ],
-  \['n', 'ga', 'email#attachments'            ],
+  \['n', 'ga', 'email#download_attachments'   ],
   \['n', 'gC', 'email#select_folder_then_copy'],
   \['n', 'gM', 'email#select_folder_then_move'],
   \['n', 'gD', 'email#delete'                 ],

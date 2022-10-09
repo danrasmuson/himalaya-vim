@@ -26,7 +26,7 @@
             " native, fzf or telescope
             let g:himalaya_folder_picker = 'native'
             let g:himalaya_folder_picker_telescope_preview = v:false
-            let g:himalaya_complete_contact_cmd = "echo test@localhost"
+            let g:himalaya_complete_contact_cmd = 'echo test@localhost'
           '';
         in
         rec {
@@ -35,8 +35,7 @@
             name = "himalaya";
             namePrefix = "";
             src = self;
-            version = 1;
-            buildInputs = with pkgs; [ himalaya fzf ];
+            buildInputs = with pkgs; [ himalaya ];
           };
 
           # nix develop
@@ -53,6 +52,9 @@
 
               # Lua LSP
               lua52Packages.lua-lsp
+
+              # FZF
+              fzf
 
               # Editors
               ((vim_configurable.override { }).customize {

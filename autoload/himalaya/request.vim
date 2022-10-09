@@ -2,7 +2,7 @@ function! himalaya#request#json(opts) abort
   let args = get(a:opts, 'args', [])
   call himalaya#log#info(printf('%s…', a:opts.msg))
   let cmd = call('printf', ['himalaya --output json ' . a:opts.cmd] + args)
-  call himalaya#job#neovim#start(cmd, {data -> s:on_json_data(data, a:opts)})
+  call himalaya#job#start(cmd, {data -> s:on_json_data(data, a:opts)})
 endfunction
 
 function! s:on_json_data(data, opts) abort

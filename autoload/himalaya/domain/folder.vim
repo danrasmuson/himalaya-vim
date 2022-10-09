@@ -1,6 +1,9 @@
 " Represents the current page being displayed.
 let s:page = 1
 
+" Represents the current folder being selected.
+let s:folder = 'INBOX'
+
 function! himalaya#domain#folder#current_page() abort
   return s:page
 endfunction
@@ -15,9 +18,6 @@ function! himalaya#domain#folder#select_next_page() abort
   call himalaya#domain#email#list()
 endfunction
 
-" Represents the current folder being selected.
-let s:folder = 'INBOX'
-
 function! himalaya#domain#folder#current() abort
   return s:folder
 endfunction
@@ -28,11 +28,11 @@ function! himalaya#domain#folder#open_picker(on_select_folder) abort
   \ 'cmd': '--account %s folders',
   \ 'args': [shellescape(account)],
   \ 'msg': 'Fetching folders',
-  \ 'on_data': {json -> s:on_fetch_folders(json, a:on_select_folder)},
+  \ 'on_data': {data -> s:open_picker(data, a:on_select_folder)},
   \})
 endfunction
 
-function! s:on_fetch_folders(folders, on_select_folder) abort
+function! s:open_picker(folders, on_select_folder) abort
   if exists('g:himalaya_folder_picker')
     let picker = g:himalaya_folder_picker
   else
@@ -44,7 +44,6 @@ function! s:on_fetch_folders(folders, on_select_folder) abort
       let picker = 'native'
     endif
   endif
-
   let select = printf('himalaya#domain#folder#pickers#%s#select', picker)
   execute printf('call %s(a:on_select_folder, a:folders)', select)
 endfunction

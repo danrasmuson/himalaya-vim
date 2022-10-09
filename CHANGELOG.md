@@ -30,10 +30,10 @@ the breaking changes:
 - keybind `himalaya-msg-reply` became `himalaya-email-reply`
 - keybind `himalaya-msg-reply-all` became `himalaya-email-reply-all`
 - keybind `himalaya-msg-forward` became `himalaya-email-forward`
-- keybind `himalaya-msg-attachments` became `himalaya-email-attachments`
 - keybind `himalaya-msg-copy` became `himalaya-email-copy`
 - keybind `himalaya-msg-move` became `himalaya-email-move`
 - keybind `himalaya-msg-delete` became `himalaya-email-delete`
+- keybind `himalaya-msg-attachments` became `himalaya-email-download-attachments`
 - keybind `himalaya-msg-add-attachment` became `himalaya-email-add-attachment`
 
 [github#230]: https://github.com/soywod/himalaya/issues/230
