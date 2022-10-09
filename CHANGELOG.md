@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Replaced system calls by async jobs [github#230].
+
 ### Changed
 
 The Vim plugin has been removed from the
@@ -30,3 +34,5 @@ the breaking changes:
 - keybind `himalaya-msg-move` became `himalaya-email-move`
 - keybind `himalaya-msg-delete` became `himalaya-email-delete`
 - keybind `himalaya-msg-add-attachment` became `himalaya-email-add-attachment`
+
+[github#230]: https://github.com/soywod/himalaya/issues/230

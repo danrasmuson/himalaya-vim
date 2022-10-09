@@ -1,44 +1,24 @@
-function! s:request(type, opts) abort
-  let msg = get(a:opts, 'msg', '')
-  let cmd = get(a:opts, 'cmd', '')
+function! himalaya#request#json(opts) abort
   let args = get(a:opts, 'args', [])
-  let should_throw = get(a:, 'opts.should_throw', v:false)
-
-  call himalaya#log#info(printf('%s…', msg))
-  let cmd = call('printf', ['himalaya --output %s ' . cmd, a:type] + args)
-  let res = system(cmd)
-
-  if empty(res)
-    redraw | call himalaya#log#info(printf('%s [OK]', msg))
-  else
-    try
-      redraw | call himalaya#log#info(printf('%s [OK]', msg))
-      if a:type == 'json'
-        let res = substitute(res, ':null', ':v:null', 'g')
-        let res = substitute(res, ':true', ':v:true', 'g')
-        let res = substitute(res, ':false', ':v:false', 'g')
-        let res = eval(res)
-        return res
-      else
-        return trim(res)
-      endif
-      redraw | call himalaya#log#info(printf('%s [OK]', msg))
-    catch
-      redraw
-      for line in split(res, "\n")
-        call himalaya#log#err(line)
-      endfor
-      if should_throw
-        throw ''
-      endif
-    endtry
-  endif
+  call himalaya#log#info(printf('%s…', a:opts.msg))
+  let cmd = call('printf', ['himalaya --output json ' . a:opts.cmd] + args)
+  call himalaya#job#neovim#start(cmd, {data -> s:on_json_data(data, a:opts)})
 endfunction
 
-function! himalaya#request#json(opts) abort
-  return s:request('json', a:opts)
+function! s:on_json_data(data, opts) abort
+  call a:opts.on_data(json_decode(a:data))
+  redraw
+  call himalaya#log#info(printf('%s [OK]', a:opts.msg))
 endfunction
 
 function! himalaya#request#plain(opts) abort
-  return s:request('plain', a:opts)
+  call himalaya#log#info(printf('%s…', a:opts.msg))
+  let cmd = call('printf', ['himalaya --output plain ' . a:opts.cmd] + a:opts.args)
+  call himalaya#job#start(cmd, {data -> s:on_plain_data(data, a:opts)})
+endfunction
+
+function! s:on_plain_data(data, opts) abort
+  call a:opts.on_data(a:data)
+  redraw
+  call himalaya#log#info(printf('%s [OK]', a:opts.msg))
 endfunction

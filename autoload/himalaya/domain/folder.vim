@@ -22,42 +22,38 @@ function! himalaya#domain#folder#current() abort
   return s:folder
 endfunction
 
-function! himalaya#domain#folder#open_picker(callback) abort
-  try
-    let account = himalaya#domain#account#current()
-    let folders = himalaya#request#json({
-    \ 'cmd': '--account %s folders',
-    \ 'args': [shellescape(account)],
-    \ 'msg': 'Fetching folders',
-    \ 'should_throw': 0,
-    \})
+function! himalaya#domain#folder#open_picker(on_select_folder) abort
+  let account = himalaya#domain#account#current()
+  call himalaya#request#json({
+  \ 'cmd': '--account %s folders',
+  \ 'args': [shellescape(account)],
+  \ 'msg': 'Fetching folders',
+  \ 'on_data': {json -> s:on_fetch_folders(json, a:on_select_folder)},
+  \})
+endfunction
 
-    if exists('g:himalaya_folder_picker')
-      let picker = g:himalaya_folder_picker
+function! s:on_fetch_folders(folders, on_select_folder) abort
+  if exists('g:himalaya_folder_picker')
+    let picker = g:himalaya_folder_picker
+  else
+    if &rtp =~ 'telescope'
+      let picker = 'telescope'
+    elseif &rtp =~ 'fzf'
+      let picker = 'fzf'
     else
-      if &rtp =~ 'telescope'
-        let picker = 'telescope'
-      elseif &rtp =~ 'fzf'
-        let picker = 'fzf'
-      else
-        let picker = 'native'
-      endif
+      let picker = 'native'
     endif
+  endif
 
-    execute printf('call himalaya#domain#folder#pickers#%s#select(a:callback, folders)', picker)
-  catch
-    if !empty(v:exception)
-      redraw
-      call himalaya#log#err(v:exception)
-    endif
-  endtry
+  let select = printf('himalaya#domain#folder#pickers#%s#select', picker)
+  execute printf('call %s(a:on_select_folder, a:folders)', select)
 endfunction
 
 function! himalaya#domain#folder#select() abort
-  call himalaya#domain#folder#open_picker('himalaya#domain#folder#handle_select')
+  call himalaya#domain#folder#open_picker(function('s:select'))
 endfunction
 
-function! himalaya#domain#folder#handle_select(folder) abort
+function! s:select(folder) abort
   let s:folder = a:folder
   let s:page = 1
   call himalaya#domain#email#list()

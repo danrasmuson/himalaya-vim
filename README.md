@@ -41,7 +41,7 @@ Defines the provider used for selecting folders (default keybind:
 - `telescope`: https://github.com/nvim-telescope/telescope.nvim
 
 If no value given, the first loaded (and available) provider will be
-used (fzf > telescope > native).
+used (telescope > fzf > native).
 
 ```vim
 let g:himalaya_folder_picker = 'native' | 'fzf' | 'telescope'
