@@ -182,7 +182,7 @@ and this plugin available and already configured.
 ## Contributing
 
 If you find a bug, feel free to open an issue at
-https://todo.sr.ht/~soywod/himalaya-vim.
+[https://todo.sr.ht/~soywod/himalaya-vim](https://todo.sr.ht/~soywod/himalaya-vim).
 
 If you have a feature in mind, feel free to send a patchset at
 https://git.sr.ht/~soywod/himalaya-vim/send-email or using the command
