@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Replaced system calls by async jobs [github#230].
+- Set email listing page size to windows height [github#46].
 
 ### Changed
 
@@ -36,3 +37,4 @@ the breaking changes:
 - keybind `himalaya-msg-add-attachment` became `himalaya-email-add-attachment`
 
 [github#230]: https://github.com/soywod/himalaya/issues/230
+[github#46]: https://github.com/soywod/himalaya/issues/46
