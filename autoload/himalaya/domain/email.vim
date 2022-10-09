@@ -44,7 +44,7 @@ function! himalaya#domain#email#read() abort
   try
     let pos = getpos('.')
     let s:id = s:get_email_id_under_cursor()
-    if empty(s:id) || s:id == 'ID' || s:id == 'HASH'
+    if empty(s:id) || s:id == 'ID'
       return
     endif
     
@@ -288,8 +288,8 @@ function! himalaya#domain#email#process_draft() abort
         \ 'should_throw': 0,
         \})
       elseif choice == 'd'
-        return himalaya#request#plain({
-        \ 'cmd': '--account %s --folder drafts template save %s -- %s',
+        return himalaya#request#json({
+        \ 'cmd': '--account %s --folder drafts save %s -- %s',
         \ 'args': [shellescape(account), attachments, shellescape(s:draft)],
         \ 'msg': 'Saving draft',
         \ 'should_throw': 0,

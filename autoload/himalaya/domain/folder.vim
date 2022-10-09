@@ -7,12 +7,12 @@ endfunction
 
 function! himalaya#domain#folder#select_previous_page() abort
   let s:page = max([1, s:page - 1])
-  call himalaya#email#list()
+  call himalaya#domain#email#list()
 endfunction
 
 function! himalaya#domain#folder#select_next_page() abort
   let s:page = s:page + 1
-  call himalaya#email#list()
+  call himalaya#domain#email#list()
 endfunction
 
 " Represents the current folder being selected.

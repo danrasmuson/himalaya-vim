@@ -25,7 +25,7 @@ function! s:request(type, opts) abort
       redraw | call himalaya#log#info(printf('%s [OK]', msg))
     catch
       redraw
-      for line in split(res, '\n')
+      for line in split(res, "\n")
         call himalaya#log#err(line)
       endfor
       if should_throw
