@@ -1,6 +1,10 @@
 " Represents the current email id being selected.
 let s:id = ''
+
+" Represents the current draft (useful during edition).
 let s:draft = ''
+
+" Represents the current attachment paths (useful during edition).
 let s:attachment_paths = []
 
 function! himalaya#domain#email#list_with(account, folder, page, should_throw) abort

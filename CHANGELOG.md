@@ -1,0 +1,32 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Changed
+
+The Vim plugin has been removed from the
+[monorepo](https://github.com/soywod/himalaya) and extracted into its
+own [repo](https://git.sr.ht/~soywod/himalaya-vim). It was a good
+occasion to refactor the code and refresh the API. Here the list of
+the breaking changes:
+
+- config `g:himalaya_mailbox_picker` became `g:himalaya_folder_picker`
+- config `g:himalaya_telescope_preview_enabled` became `g:himalaya_folder_picker_telescope_preview`
+- keybind `himalaya-mbox-input` became `himalaya-folder-select`
+- keybind `himalaya-mbox-prev-page` became `himalaya-folder-select-previous-page`
+- keybind `himalaya-mbox-next-page` became `himalaya-folder-select-next-page`
+- keybind `himalaya-msg-read` became `himalaya-email-read`
+- keybind `himalaya-msg-write` became `himalaya-email-write`
+- keybind `himalaya-msg-reply` became `himalaya-email-reply`
+- keybind `himalaya-msg-reply-all` became `himalaya-email-reply-all`
+- keybind `himalaya-msg-forward` became `himalaya-email-forward`
+- keybind `himalaya-msg-attachments` became `himalaya-email-attachments`
+- keybind `himalaya-msg-copy` became `himalaya-email-copy`
+- keybind `himalaya-msg-move` became `himalaya-email-move`
+- keybind `himalaya-msg-delete` became `himalaya-email-delete`
+- keybind `himalaya-msg-add-attachment` became `himalaya-email-add-attachment`
