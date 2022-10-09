@@ -175,9 +175,19 @@ When you exit this special buffer, you will be prompted 4 choices:
 ## Development
 
 The development environment is managed by
-[Nix](https://nixos.org/download.html). Running `nix-shell` (or `nix
-develop` with the flakes feature) will spawn a shell with Vim, Neovim
-and this plugin available and already configured.
+[Nix](https://nixos.org/download.html). Running `nix-shell` will spawn
+a shell with everything you need to get started with this plugin:
+
+```sh
+# starts a nix shell
+$ nix-shell
+
+# starts Vim and the :Himalaya command
+$ vim +Himalaya
+
+# starts Neovim and the :Himalaya command
+$ nvim +Himalaya
+```
 
 ## Contributing
 

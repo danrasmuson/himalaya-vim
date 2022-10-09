@@ -17,12 +17,22 @@
           pkgs = import nixpkgs { inherit system; };
           himalaya = (import himalaya-dev).defaultPackage.${system}; # Develop build
           # himalaya = pkgs.himalaya; # Master build (last release)
-          name = "himalaya";
+          customRC = ''
+            syntax on
+            filetype plugin on
+
+            packadd! himalaya
+
+            " native, fzf or telescope
+            let g:himalaya_folder_picker = 'native'
+            let g:himalaya_folder_picker_telescope_preview = v:false
+            let g:himalaya_complete_contact_cmd = "echo test@localhost"
+          '';
         in
         rec {
           # nix build
           defaultPackage = pkgs.vimUtils.buildVimPluginFrom2Nix {
-            inherit name;
+            name = "himalaya";
             namePrefix = "";
             src = self;
             version = 1;
@@ -47,34 +57,21 @@
               # Editors
               ((vim_configurable.override { }).customize {
                 name = "vim";
-                vimrcConfig.packages.myplugins = with pkgs.vimPlugins; {
-                  start = [ fzf-vim ];
-                  opt = [ defaultPackage ];
+                vimrcConfig = {
+                  inherit customRC;
+                  packages.myplugins = with pkgs.vimPlugins; {
+                    start = [ fzf-vim ];
+                    opt = [ defaultPackage ];
+                  };
                 };
-                vimrcConfig.customRC = ''
-                  packadd! ${name}
-
-                  " native or fzf
-                  let g:himalaya_folder_picker = 'native'
-                '';
               })
               (neovim.override {
                 configure = {
+                  inherit customRC;
                   packages.myPlugins = with pkgs.vimPlugins; {
                     start = [ telescope-nvim fzf-vim ];
                     opt = [ defaultPackage ];
                   };
-                  customRC = ''
-                    syntax on
-                    filetype plugin on
-
-                    packadd! ${name}
-
-                    " native, fzf or telescope
-                    let g:himalaya_folder_picker = 'telescope'
-                    let g:himalaya_folder_picker_telescope_preview = v:false
-                    let g:himalaya_complete_contact_cmd = "echo test@localhost"
-                  '';
                 };
               })
             ];
