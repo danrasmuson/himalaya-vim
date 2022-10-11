@@ -56,11 +56,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1665131065,
-        "narHash": "sha256-YNhesJfQbcWd7f0DonbaNX6Ed1DMwu8t+zD+4tfgqq8=",
+        "lastModified": 1665430298,
+        "narHash": "sha256-d+ERCUPUHx41HfBtjb6BjhGKzkUTGIb01BRWvAnLYwk=",
         "owner": "soywod",
         "repo": "himalaya",
-        "rev": "8125a55bbe3507b217f17eed05791050abd2cc89",
+        "rev": "15e8a0f08feef749d6490c43758526a5c1e1d635",
         "type": "github"
       },
       "original": {
