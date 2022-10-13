@@ -7,15 +7,23 @@ Vim plugin for email management based on the
 
 First you need to install and configure the [himalaya
 CLI](https://github.com/soywod/himalaya#installation). Then you can
-install this plugin with your favorite plugin manager. For example
-with [vim-plug](https://github.com/junegunn/vim-plug), add to your
-`.vimrc`:
+install this plugin with your favorite plugin manager:
+
+### Using [packer](https://github.com/wbthomason/packer.nvim)
+
+```lua
+use "https://git.sr.ht/~soywod/himalaya-vim"
+```
+
+```vim
+:PackerSync
+```
+
+### Using [vim-plug](https://github.com/junegunn/vim-plug)
 
 ```vim
 Plug 'https://git.sr.ht/~soywod/himalaya-vim'
 ```
-
-Then:
 
 ```vim
 :PlugInstall
