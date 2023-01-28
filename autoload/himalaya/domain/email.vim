@@ -81,7 +81,7 @@ function! himalaya#domain#email#write(...) abort
   let account = himalaya#domain#account#current()
   let folder = himalaya#domain#folder#current()
   if a:0 > 0
-    call s:write(a:1)
+    call s:write('edit', a:1)
   else
     call himalaya#request#plain({
     \ 'cmd': '--account %s --folder %s template new',
@@ -211,12 +211,15 @@ function! himalaya#domain#email#process_draft() abort
         return
       elseif choice == 'c'
         call himalaya#domain#email#write(join(getline(1, '$'), "\n") . "\n")
-        return
+        throw 'Prompt:Interrupt'
       endif
     endwhile
   catch
-    call himalaya#log#err(v:exception)
-    throw ''
+    if v:exception =~ ':Interrupt$'
+      call interrupt()
+    else
+      call himalaya#log#err(v:exception)
+    endif
   endtry
 endfunction
 
