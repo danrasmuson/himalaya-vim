@@ -2,7 +2,6 @@
   description = "Vim plugin for email management.";
 
   inputs = {
-    himalaya-dev.url = "github:soywod/himalaya/develop";
     utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -10,13 +9,11 @@
     };
   };
 
-  outputs = { self, nixpkgs, himalaya-dev, utils, ... }:
+  outputs = { self, nixpkgs, utils, ... }:
     utils.lib.eachDefaultSystem
       (system:
         let
           pkgs = import nixpkgs { inherit system; };
-          himalaya = (import himalaya-dev).defaultPackage.${system}; # Develop build
-          # himalaya = pkgs.himalaya; # Master build (last release)
           customRC = ''
             syntax on
             filetype plugin on

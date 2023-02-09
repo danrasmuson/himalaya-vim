@@ -19,7 +19,7 @@ endfunction
 
 function! himalaya#domain#email#list_with(account, folder, page) abort
   call himalaya#request#plain({
-  \ 'cmd': '--account %s --folder %s list --max-width %d --size %d --page %d',
+  \ 'cmd': '--account %s --folder %s list --max-width %d --page-size %d --page %d',
   \ 'args': [shellescape(a:account), shellescape(a:folder), s:bufwidth(), winheight(0) - 1, a:page],
   \ 'msg': printf('Fetching %s emails', a:folder),
   \ 'on_data': {data -> s:list_with(a:folder, a:page, data)}
