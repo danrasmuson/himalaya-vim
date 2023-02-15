@@ -39,6 +39,10 @@ filetype plugin on
 set hidden
 ```
 
+### `g:himalaya_executable`
+
+Defines a custom path for the himalaya binary. Defaults to `himalaya`.
+
 ### `g:himalaya_folder_picker`
 
 Defines the provider used for selecting folders (default keybind:

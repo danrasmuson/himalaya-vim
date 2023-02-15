@@ -2,8 +2,11 @@ if exists('g:himalaya_loaded')
   finish
 endif
 
-if !executable('himalaya')
-  throw 'Himalaya CLI not found, see https://github.com/soywod/himalaya#installation'
+let default_executable = 'himalaya'
+let g:himalaya_executable = get(g:, 'himalaya_executable', default_executable)
+
+if !executable(g:himalaya_executable)
+  throw 'Himalaya CLI not found, see https://pimalaya.org/himalaya/docs/cli/installation.html'
 endif
 
 " Backup cpo
