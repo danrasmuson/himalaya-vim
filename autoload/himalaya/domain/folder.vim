@@ -49,10 +49,10 @@ function! s:open_picker(folders, on_select_folder) abort
 endfunction
 
 function! himalaya#domain#folder#select() abort
-  call himalaya#domain#folder#open_picker(function('s:select'))
+  call himalaya#domain#folder#open_picker('himalaya#domain#folder#set')
 endfunction
 
-function! s:select(folder) abort
+function! himalaya#domain#folder#set(folder) abort
   let s:folder = a:folder
   let s:page = 1
   call himalaya#domain#email#list()

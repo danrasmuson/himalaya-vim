@@ -203,12 +203,30 @@ $ nvim +Himalaya
 
 ## Contributing
 
-If you find a bug, feel free to open an issue at
-[https://todo.sr.ht/~soywod/himalaya-vim](https://todo.sr.ht/~soywod/himalaya-vim).
+If you find a **bug**, please send an email at
+[~soywod/pimalaya@todo.sr.ht](mailto:~soywod/pimalaya@todo.sr.ht).
 
-If you have a feature in mind, feel free to send a patchset at
-https://git.sr.ht/~soywod/himalaya-vim/send-email or using the command
-`git send-email`.
+If you have a **question**, please send an email at
+[~soywod/pimalaya@lists.sr.ht](mailto:~soywod/pimalaya@lists.sr.ht).
+
+If you want to **propose a feature** or **fix a bug**, please send a
+patch at
+[~soywod/pimalaya@lists.sr.ht](mailto:~soywod/pimalaya@lists.sr.ht)
+using [git send-email](https://git-scm.com/docs/git-send-email) (see
+[this guide](https://git-send-email.io/) on how to configure it).
+
+If you want to **subscribe** to the mailing list, please send an email
+at
+[~soywod/pimalaya+subscribe@lists.sr.ht](mailto:~soywod/pimalaya+subscribe@lists.sr.ht).
+
+If you want to **unsubscribe** to the mailing list, please send an
+email at
+[~soywod/pimalaya+unsubscribe@lists.sr.ht](mailto:~soywod/pimalaya+unsubscribe@lists.sr.ht).
+
+If you want to **discuss** about the project, feel free to join the
+[Matrix](https://matrix.org/) workspace
+[#pimalaya.himalaya](https://matrix.to/#/#pimalaya.himalaya:matrix.org) or contact me
+directly [@soywod](https://matrix.to/#/@soywod:matrix.org).
 
 ## Credits
 
@@ -222,8 +240,8 @@ European Commission in September, 2022.
 
 ## Sponsoring
 
-[![github](https://img.shields.io/badge/-GitHub%20Sponsors-fafbfc?logo=GitHub%20Sponsors&style=flat-square)](https://github.com/sponsors/soywod)
-[![paypal](https://img.shields.io/badge/-PayPal-0079c1?logo=PayPal&logoColor=ffffff&style=flat-square)](https://www.paypal.com/paypalme/soywod)
-[![ko-fi](https://img.shields.io/badge/-Ko--fi-ff5e5a?logo=Ko-fi&logoColor=ffffff&style=flat-square)](https://ko-fi.com/soywod)
-[![buy-me-a-coffee](https://img.shields.io/badge/-Buy%20Me%20a%20Coffee-ffdd00?logo=Buy%20Me%20A%20Coffee&logoColor=000000&style=flat-square)](https://www.buymeacoffee.com/soywod)
-[![liberapay](https://img.shields.io/badge/-Liberapay-f6c915?logo=Liberapay&logoColor=222222&style=flat-square)](https://liberapay.com/soywod)
+[![GitHub](https://img.shields.io/badge/-GitHub%20Sponsors-fafbfc?logo=GitHub%20Sponsors)](https://github.com/sponsors/soywod)
+[![PayPal](https://img.shields.io/badge/-PayPal-0079c1?logo=PayPal&logoColor=ffffff)](https://www.paypal.com/paypalme/soywod)
+[![Ko-fi](https://img.shields.io/badge/-Ko--fi-ff5e5a?logo=Ko-fi&logoColor=ffffff)](https://ko-fi.com/soywod)
+[![Buy Me a Coffee](https://img.shields.io/badge/-Buy%20Me%20a%20Coffee-ffdd00?logo=Buy%20Me%20A%20Coffee&logoColor=000000)](https://www.buymeacoffee.com/soywod)
+[![Liberapay](https://img.shields.io/badge/-Liberapay-f6c915?logo=Liberapay&logoColor=222222)](https://liberapay.com/soywod)
