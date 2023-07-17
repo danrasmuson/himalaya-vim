@@ -4,9 +4,6 @@ let s:id = ''
 " Represents the current draft (used during edition).
 let s:draft = ''
 
-" Represents the current attachment paths (used during edition).
-let s:attachment_paths = []
-
 function! himalaya#domain#email#list(...) abort
   if a:0 > 0
     call himalaya#domain#account#select(a:1)
@@ -143,16 +140,6 @@ function! s:write(msg, email) abort
   execute 0
 endfunction
 
-function! himalaya#domain#email#add_attachment() abort
-  let attachment_path = input('Attachment path: ', '', 'file')
-  if empty(expand(glob(attachment_path)))
-    throw 'The file does not exist'
-  endif
-  call add(s:attachment_paths, attachment_path)
-  redraw
-  call himalaya#log#info('Attachment added!')
-endfunction
-
 function! himalaya#domain#email#complete_contact(findstart, base) abort
   if a:findstart
     if !exists('g:himalaya_complete_contact_cmd')
@@ -187,25 +174,28 @@ endfunction
 function! himalaya#domain#email#process_draft() abort
   try
     let account = himalaya#domain#account#current()
-    let attachments = join(map(s:attachment_paths, '"--attachment ".v:val'), ' ')
     while 1
       let choice = input('(s)end, (d)raft, (q)uit or (c)ancel? ')
       let choice = tolower(choice)[0]
       redraw | echo
 
       if choice == 's'
+        let draft = tempname()
+	call writefile(getline(1, '$'), draft)
         return himalaya#request#plain({
-        \ 'cmd': '--account %s template send %s -- %s',
-        \ 'args': [shellescape(account), attachments, shellescape(s:draft)],
+        \ 'cmd': '--account %s template send < %s',
+        \ 'args': [shellescape(account), shellescape(draft)],
         \ 'msg': 'Sending email',
-        \ 'on_data': {-> {}},
+        \ 'on_data': {-> delete(draft)},
         \})
       elseif choice == 'd'
+        let draft = tempname()
+	call writefile(getline(1, '$'), draft)
         return himalaya#request#plain({
-        \ 'cmd': '--account %s --folder drafts save %s -- %s',
-        \ 'args': [shellescape(account), attachments, shellescape(s:draft)],
+        \ 'cmd': '--account %s --folder drafts template save < %s',
+        \ 'args': [shellescape(account), shellescape(draft)],
         \ 'msg': 'Saving draft',
-        \ 'on_data': {-> {}},
+        \ 'on_data': {-> delete(draft)},
         \})
       elseif choice == 'q'
         return

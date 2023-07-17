@@ -2,7 +2,7 @@
   description = "Vim plugin for email management.";
 
   inputs = {
-    himalaya-git.url = "github:soywod/himalaya/develop";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     utils.url = "github:numtide/flake-utils";
     flake-compat = {
       url = "github:edolstra/flake-compat";
@@ -10,11 +10,10 @@
     };
   };
 
-  outputs = { self, nixpkgs, himalaya-git, utils, ... }:
+  outputs = { self, nixpkgs, utils, ... }:
     utils.lib.eachDefaultSystem
       (system:
         let
-          himalaya = himalaya-git.defaultPackage.${system};
           pkgs = import nixpkgs { inherit system; };
           customRC = ''
             syntax on
@@ -30,12 +29,12 @@
         in
         rec {
           # nix build
-          defaultPackage = pkgs.vimUtils.buildVimPluginFrom2Nix {
+          packages.default = pkgs.vimUtils.buildVimPluginFrom2Nix {
             name = "himalaya";
             namePrefix = "";
             src = self;
-            buildInputs = [ himalaya ];
-            postPatch = ''
+            buildInputs = with pkgs; [ himalaya ];
+            postPatch = with pkgs; ''
               substituteInPlace plugin/himalaya.vim \
                 --replace "default_executable = 'himalaya'" "default_executable = '${himalaya}/bin/himalaya'"
             '';
@@ -43,7 +42,7 @@
 
           # nix develop
           devShell = pkgs.mkShell {
-            buildInputs = defaultPackage.buildInputs;
+            buildInputs = self.packages.${system}.default.buildInputs;
             nativeBuildInputs = with pkgs; [
 
               # Nix LSP + formatter
@@ -67,7 +66,7 @@
                   inherit customRC;
                   packages.myplugins = with pkgs.vimPlugins; {
                     start = [ fzf-vim ];
-                    opt = [ defaultPackage ];
+                    opt = [ self.packages.${system}.default ];
                   };
                 };
               })
@@ -76,12 +75,11 @@
                   inherit customRC;
                   packages.myPlugins = with pkgs.vimPlugins; {
                     start = [ telescope-nvim fzf-vim ];
-                    opt = [ defaultPackage ];
+                    opt = [ self.packages.${system}.default ];
                   };
                 };
               })
             ];
           };
-        }
-      );
+        });
 }
