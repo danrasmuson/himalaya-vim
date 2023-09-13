@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed changing folder using telescope due to script function not accessible from lua env [#47].
 - Fixed copy, move and delete not working when using multiple ids [#147].
+- Fixed too long JSON string not being processed [#98].
 
 ## [0.7.1]
 
@@ -50,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.7.1]: https://git.sr.ht/~soywod/himalaya-vim/refs/v0.7.1
 
 [#47]: https://todo.sr.ht/~soywod/pimalaya/47
+[#98]: https://todo.sr.ht/~soywod/pimalaya/98
 [#147]: https://todo.sr.ht/~soywod/pimalaya/147
 
 [github#230]: https://github.com/soywod/himalaya/issues/230

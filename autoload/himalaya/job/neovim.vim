@@ -34,7 +34,7 @@ function! s:on_exit(callback) abort
     redraw
     throw 'CLI error, see :messages for more information'
   endif
-  call a:callback(trim(join(s:stdout, "\n")))
+  call a:callback(s:stdout)
 endfunction
 
 function! s:compact_lines(lines) abort

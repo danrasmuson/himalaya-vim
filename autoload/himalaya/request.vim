@@ -6,7 +6,7 @@ function! himalaya#request#json(opts) abort
 endfunction
 
 function! s:on_json_data(data, opts) abort
-  call a:opts.on_data(json_decode(a:data))
+  call a:opts.on_data(json_decode(join(a:data)))
   redraw
   call himalaya#log#info(printf('%s [OK]', a:opts.msg))
 endfunction
@@ -18,7 +18,7 @@ function! himalaya#request#plain(opts) abort
 endfunction
 
 function! s:on_plain_data(data, opts) abort
-  call a:opts.on_data(a:data)
+  call a:opts.on_data(trim(join(a:data, "\n")))
   redraw
   call himalaya#log#info(printf('%s [OK]', a:opts.msg))
 endfunction
