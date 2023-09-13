@@ -223,7 +223,7 @@ function! himalaya#domain#email#copy(folder) abort
   let folder = himalaya#domain#folder#current()
   call himalaya#request#plain({
   \ 'cmd': '--account %s --folder %s copy %s %s',
-  \ 'args': [shellescape(account), shellescape(folder), id, shellescape(a:folder)],
+  \ 'args': [shellescape(account), shellescape(folder), shellescape(a:folder), id],
   \ 'msg': 'Copying email',
   \ 'on_data': {-> himalaya#domain#email#list_with(account, folder, himalaya#domain#folder#current_page())},
   \})
@@ -242,7 +242,7 @@ function! himalaya#domain#email#move(folder) abort
   let folder = himalaya#domain#folder#current()
   call himalaya#request#plain({
   \ 'cmd': '--account %s --folder %s move %s %s',
-  \ 'args': [shellescape(account), shellescape(folder), id, shellescape(a:folder)],
+  \ 'args': [shellescape(account), shellescape(folder), shellescape(a:folder), id],
   \ 'msg': 'Moving email',
   \ 'on_data': {-> himalaya#domain#email#list_with(account, folder, himalaya#domain#folder#current_page())},
   \})
@@ -295,7 +295,7 @@ endfunction
 
 function! s:get_email_id_under_cursors(from, to) abort
   try
-    return join(map(range(a:from, a:to), 's:get_email_id_from_line(getline(v:val))'), ',')
+    return join(map(range(a:from, a:to), 's:get_email_id_from_line(getline(v:val))'))
   catch
     throw 'emails not found'
   endtry
