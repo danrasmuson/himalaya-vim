@@ -15,6 +15,9 @@
       (system:
         let
           pkgs = import nixpkgs { inherit system; };
+          plugin = name:
+            builtins.trace "${name} rev: ${pkgs.vimPlugins.${name}.src.rev}" pkgs.vimPlugins.${name};
+          plugins = map plugin;
           customRC = ''
             syntax on
             filetype plugin on
@@ -64,8 +67,8 @@
                 name = "vim";
                 vimrcConfig = {
                   inherit customRC;
-                  packages.myplugins = with pkgs.vimPlugins; {
-                    start = [ fzf-vim ];
+                  packages.myplugins = {
+                    start = with pkgs.vimPlugins; [ fzf-vim ];
                     opt = [ self.packages.${system}.default ];
                   };
                 };
@@ -73,8 +76,8 @@
               (neovim.override {
                 configure = {
                   inherit customRC;
-                  packages.myPlugins = with pkgs.vimPlugins; {
-                    start = [ telescope-nvim fzf-vim ];
+                  packages.myPlugins = {
+                    start = plugins [ "telescope-nvim" "fzf-vim" ];
                     opt = [ self.packages.${system}.default ];
                   };
                 };
