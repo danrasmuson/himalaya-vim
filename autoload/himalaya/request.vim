@@ -18,7 +18,7 @@ function! himalaya#request#plain(opts) abort
 endfunction
 
 function! s:on_plain_data(data, opts) abort
-  call a:opts.on_data(trim(join(a:data, "\n")))
+  call a:opts.on_data(trim(a:data))
   redraw
   call himalaya#log#info(printf('%s [OK]', a:opts.msg))
 endfunction
