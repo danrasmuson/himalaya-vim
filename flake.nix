@@ -1,5 +1,5 @@
 {
-  description = "Vim plugin for email management.";
+  description = "Vim front-end for the email client Himalaya CLI";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";

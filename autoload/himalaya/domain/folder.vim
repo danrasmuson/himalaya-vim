@@ -25,9 +25,9 @@ endfunction
 function! himalaya#domain#folder#open_picker(on_select_folder) abort
   let account = himalaya#domain#account#current()
   call himalaya#request#json({
-  \ 'cmd': '--account %s folders',
+  \ 'cmd': 'folder list --account %s',
   \ 'args': [shellescape(account)],
-  \ 'msg': 'Fetching folders',
+  \ 'msg': 'Listing folders',
   \ 'on_data': {data -> s:open_picker(data, a:on_select_folder)},
   \})
 endfunction

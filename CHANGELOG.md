@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Adjusted code for Himalaya CLI `v1.0.0-beta`.
+
 ### Fixed
 
 - Fixed changing folder using telescope due to script function not accessible from lua env [#47].

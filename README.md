@@ -1,13 +1,10 @@
 # 📫 Himalaya
 
-Vim plugin for email management based on the
-[himalaya-cli](https://github.com/soywod/himalaya).
+Vim plugin for email management based on the [himalaya-cli](https://github.com/soywod/himalaya).
 
 ## Installation
 
-First you need to install and configure the [himalaya
-CLI](https://github.com/soywod/himalaya#installation). Then you can
-install this plugin with your favorite plugin manager:
+First you need to install and configure the [himalaya CLI](https://github.com/soywod/himalaya#installation). Then you can install this plugin with your favorite plugin manager:
 
 ### Using [packer](https://github.com/wbthomason/packer.nvim)
 
@@ -42,6 +39,10 @@ set hidden
 ### `g:himalaya_executable`
 
 Defines a custom path for the himalaya binary. Defaults to `himalaya`.
+
+### `g:himalaya_config_path`
+
+Override the default TOML configuration file.
 
 ### `g:himalaya_folder_picker`
 
