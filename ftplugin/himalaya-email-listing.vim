@@ -15,6 +15,7 @@ call himalaya#keybinds#define([
   \['n', 'ga'  , 'email#download_attachments'   ],
   \['n', 'gC'  , 'email#select_folder_then_copy'],
   \['n', 'gM'  , 'email#select_folder_then_move'],
+  \['n', 'e'  , 'email#move_to_all_mail'],
   \['n', 'gD'  , 'email#delete'                 ],
   \['v', 'gD'  , 'email#delete'                 ],
 \])

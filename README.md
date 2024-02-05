@@ -1,3 +1,5 @@
+This is a fork. Please find official repo here: [https://git.sr.ht/~soywod/himalaya-vim](https://git.sr.ht/~soywod/himalaya-vim).
+
 # 📫 Himalaya
 
 Vim plugin for email management based on the [himalaya-cli](https://github.com/soywod/himalaya).

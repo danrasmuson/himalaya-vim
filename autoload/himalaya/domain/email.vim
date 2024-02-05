@@ -247,6 +247,19 @@ function! himalaya#domain#email#move(folder) abort
   \})
 endfunction
 
+function! himalaya#domain#email#move_to_all_mail() abort
+  let id = stridx(bufname('%'), 'Himalaya emails') == 0 ? s:get_email_id_under_cursor() : s:id
+  redraw | echo
+  let account = himalaya#domain#account#current()
+  let folder = himalaya#domain#folder#current()
+  call himalaya#request#plain({
+  \ 'cmd': 'message move --account %s --folder %s %s %s',
+  \ 'args': [shellescape(account), shellescape(folder), shellescape('[Gmail]/All Mail'), id],
+  \ 'msg': 'Moving email',
+  \ 'on_data': {-> himalaya#domain#email#list_with(account, folder, himalaya#domain#folder#current_page())},
+  \})
+endfunction
+
 function! himalaya#domain#email#delete() abort range
   let ids = stridx(bufname('%'), 'Himalaya emails') == 0 ? s:get_email_id_under_cursors(a:firstline, a:lastline) : s:id
   let choice = input(printf('Are you sure you want to delete email(s) %s? (y/N) ', ids))
